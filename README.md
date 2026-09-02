@@ -1,9 +1,9 @@
 
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER YOUR NAME : MUTHUAKASH M</H3>
+<H3>ENTER YOUR REGISTER NO : 212225230194</H3>
 <H3>EX. NO.4</H3>
-<H3>DATE:</H3>
-<H1 ALIGN =CENTER>Implementation of MLP with Backpropagation for Multiclassification</H1>
+<H3>DATE:02/09/2026</H3>
+<H1 ALIGN =CENTER >Implementation of MLP with Backpropagation for Multiclassification</H1>
 <H3>Aim:</H3>
 To implement a Multilayer Perceptron for Multi classification
 <H3>Theory</H3>
@@ -116,11 +116,105 @@ Normalize our dataset.
 
 <H3>Program:</H3> 
 
-Insert your code here
+````python
+import pandas as pd
+import sklearn
+
+from sklearn import preprocessing
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from sklearn.metrics import classification_report, confusion_matrix
+
+# Load Iris dataset from Scikit-learn
+iris = load_iris()
+
+# Create DataFrame
+irisdata = pd.DataFrame(
+    iris.data,
+    columns=[
+        'sepal-length',
+        'sepal-width',
+        'petal-length',
+        'petal-width'
+    ]
+)
+
+# Add class names
+irisdata['Class'] = [
+    iris.target_names[i] for i in iris.target
+]
+
+# Take first 4 columns as X
+X = irisdata.iloc[:, 0:4]
+
+# Take Class column as y
+y = irisdata[['Class']]
+
+# Display first 5 rows
+print(X.head())
+print(y.head())
+
+# Display unique classes
+print(y.Class.unique())
+
+# Convert categorical values into numerical values
+le = preprocessing.LabelEncoder()
+
+y = y.apply(le.fit_transform)
+
+print(y.head())
+
+# Split data into training and testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.20,
+    random_state=42
+)
+
+# Feature scaling
+scaler = StandardScaler()
+
+scaler.fit(X_train)
+
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Create MLP classifier
+mlp = MLPClassifier(
+    hidden_layer_sizes=(10, 10, 10),
+    max_iter=1000,
+    random_state=42
+)
+
+# Train the model
+mlp.fit(X_train, y_train.values.ravel())
+
+# Make predictions
+predictions = mlp.predict(X_test)
+
+print("Predictions:")
+print(predictions)
+
+# Evaluate algorithm performance
+print("Confusion Matrix:")
+print(confusion_matrix(y_test, predictions))
+
+print("Classification Report:")
+print(classification_report(y_test, predictions))
+````
+
+
+
+
+
 
 <H3>Output:</H3>
 
-Show your results here
+<img width="1242" height="727" alt="image" src="https://github.com/user-attachments/assets/2459b934-b91c-4c1f-bd7f-c857589baa7f" />
+
 
 <H3>Result:</H3>
 Thus, MLP is implemented for multi-classification using python.
